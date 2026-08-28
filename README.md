@@ -213,8 +213,6 @@ Possible future improvements include:
 
 **Adhithyan CB**
 
-GitHub: https://github.com/adhithyancb7-crypto
-
 ---
 
 ## 📜 License
