@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-admin-home="true">
+    <header class="navbar">
+        <div class="logo"><a href="admin-home.html">Free Series Details Admin</a></div>
+        <nav><a href="index.html">Public Home</a></nav>
+        <div class="nav-actions"><button type="button" class="user-btn" id="ownerLogout">Log out</button></div>
+    </header>
+    <section class="page-hero">
+        <h1 id="adminHomeTitle">Admin Home</h1>
+        <p>Registered user details</p>
+    </section>
+    <main class="section">
+        <div class="section-header">
+            <div>
+                <p class="section-label">PRIVATE DATABASE</p>
+                <h2 id="userTotal">Users</h2>
+            </div>
+        </div>
+        <div class="films-grid" id="userTable"></div>
+        <div id="userDetail" class="profile-section" style="display:none; margin-top:32px;"></div>
+    </main>
+    <script src="omdb-config.js"></script>
+    <script src="css/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Free Series Details</a></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Series</a>
+            <a href="my-lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+        </nav>
+        <div class="nav-actions">
+            <button class="user-btn" onclick="userLogout()">Log out</button>
+        </div>
+    </header>
+
+    <main class="settings-page">
+        <a class="settings-back-link" href="profile.html">Back to profile</a>
+        <div class="settings-heading">
+            <p class="section-label">ACCOUNT SETTINGS</p>
+            <h1>Profile</h1>
+            <p>Manage your public profile and account preferences.</p>
+        </div>
+
+        <div class="settings-layout">
+            <aside class="settings-sidebar">
+                <div class="settings-avatar" id="settingsAvatar">U</div>
+                <h2 id="settingsUsername">Username</h2>
+                <nav class="settings-nav" aria-label="Account settings">
+                    <a class="is-active" href="#profileUsernameInput" data-settings-target="profileUsernameInput">Profile</a>
+                    <a href="#profilePictureInput" data-settings-target="profilePictureInput">Avatar</a>
+                    <a href="#privacy" data-settings-target="privacy">Privacy</a>
+                    <a href="profile.html">Back to profile</a>
+                </nav>
+            </aside>
+
+            <section class="settings-panel">
+                <h2>Profile</h2>
+                <form id="editProfileForm" class="settings-form">
+                    <div class="settings-form-row">
+                        <div class="form-group">
+                            <label for="profileUsernameInput">Username</label>
+                            <input type="text" id="profileUsernameInput" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileEmailInput">Email address</label>
+                            <input type="email" id="profileEmailInput" required>
+                        </div>
+                    </div>
+                    <div class="settings-form-row">
+                        <div class="form-group">
+                            <label for="profileAvatarInput">Avatar letter</label>
+                            <input type="text" id="profileAvatarInput" maxlength="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="privacy">Privacy</label>
+                            <select id="privacy" name="privacy">
+                                <option value="public">Public profile</option>
+                                <option value="private">Private profile</option>
+                                <option value="friends">Friends only</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePictureInput">Profile picture</label>
+                        <input type="file" id="profilePictureInput" accept="image/*">
+                        <small>Choose an image smaller than 2 MB.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" rows="5" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    <div class="settings-form-actions">
+                        <a class="view-profile-btn" href="profile.html">Cancel</a>
+                        <button type="submit" class="save-btn">Save Changes</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script src="css/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!userManager.currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const user = userManager.currentUser;
+            document.getElementById("settingsUsername").textContent = user.username;
+            document.getElementById("profileUsernameInput").value = user.username || "";
+            document.getElementById("profileEmailInput").value = user.email || "";
+            document.getElementById("profileAvatarInput").value = user.avatar || user.username.charAt(0).toUpperCase();
+            document.getElementById("privacy").value = user.privacy || "public";
+            document.getElementById("bio").value = user.bio || "";
+
+            const avatar = document.getElementById("settingsAvatar");
+            avatar.textContent = user.avatar || user.username.charAt(0).toUpperCase();
+            if (user.avatarImage) avatar.innerHTML = `<img src="${user.avatarImage}" alt="${user.username} profile picture">`;
+
+            document.querySelectorAll("[data-settings-target]").forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    document.querySelectorAll("[data-settings-target]").forEach(item => item.classList.remove("is-active"));
+                    link.classList.add("is-active");
+                    const target = document.getElementById(link.dataset.settingsTarget);
+                    if (!target) return;
+                    target.scrollIntoView({ behavior: "smooth", block: "center" });
+                    target.focus({ preventScroll: true });
+                });
+            });
+
+            document.getElementById("editProfileForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                const username = document.getElementById("profileUsernameInput").value.trim();
+                const email = document.getElementById("profileEmailInput").value.trim().toLowerCase();
+                const avatarLetter = document.getElementById("profileAvatarInput").value.trim().charAt(0).toUpperCase();
+                const bio = document.getElementById("bio").value;
+                const privacy = document.getElementById("privacy").value;
+                const pictureFile = document.getElementById("profilePictureInput").files[0];
+
+                if (!username || !email || !avatarLetter) return;
+                if (pictureFile && (!pictureFile.type.startsWith("image/") || pictureFile.size > 2 * 1024 * 1024)) {
+                    alert("Please choose an image smaller than 2 MB.");
+                    return;
+                }
+
+                const saveProfile = avatarImage => {
+                    if (!userManager.updateProfile({ username, email, avatar: avatarLetter, avatarImage, bio, privacy })) {
+                        alert("That email address is already in use.");
+                        return;
+                    }
+                    showMessageDialog("Profile updated successfully!");
+                    window.setTimeout(() => window.location.href = "profile.html", 500);
+                };
+
+                if (pictureFile) {
+                    const reader = new FileReader();
+                    reader.addEventListener("load", () => saveProfile(reader.result));
+                    reader.readAsDataURL(pictureFile);
+                } else {
+                    saveProfile(user.avatarImage || "");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

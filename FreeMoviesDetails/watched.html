@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series I've Watched - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'" id="loginBtn">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'" id="signupBtn">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>Films I've Watched</h1>
+        <p>Track your viewing history and ratings</p>
+    </section>
+
+
+
+    <!-- =========================
+         WATCHED CONTENT
+    ========================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">WATCHED</p>
+
+                <h2>Your Watched Films</h2>
+
+            </div>
+
+            <form id="watchedSearchForm" class="watched-search-form">
+                <input type="text" id="watchedSearch" class="search-input search-input-small" placeholder="Search all series..." aria-label="Search all series" data-search-source="tvmaze">
+            </form>
+
+        </div>
+
+        <div class="films-grid" id="watchedContainer">
+            <!-- Watched movies will be populated here -->
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!userManager.currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            populateWatched();
+        });
+    </script>
+
+</body>
+
+</html>

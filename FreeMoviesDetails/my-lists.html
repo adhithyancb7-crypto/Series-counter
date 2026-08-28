@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Lists - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'" id="loginBtn">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'" id="signupBtn">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>My Lists</h1>
+        <p>Create and manage your personal movie lists</p>
+    </section>
+
+
+
+    <!-- =========================
+         MY LISTS CONTENT
+    ========================== -->
+
+    <section class="section">
+
+        <div class="list-profile-strip">
+            <div class="list-profile-avatar" id="listProfileAvatar">U</div>
+            <div>
+                <p class="section-label">LISTS BY</p>
+                <h2 id="listProfileName">Your Lists</h2>
+                <nav class="list-profile-nav" aria-label="Profile list navigation">
+                    <a class="is-active" href="my-lists.html">Lists</a>
+                    <a href="watchlist.html">Watchlist</a>
+                    <a href="likes.html">Likes</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">YOUR LISTS</p>
+
+                <h2>My Personal Lists</h2>
+
+            </div>
+
+            <button class="create-list-btn" onclick="showCreateListModal()">+ Create New List</button>
+
+        </div>
+
+        <div class="list-index-tabs" role="tablist" aria-label="List ownership">
+            <button type="button" class="is-active">Your Lists</button>
+            <button type="button" onclick="showMessageDialog('Shared lists will appear here when someone shares a list with you.')">Shared with You</button>
+        </div>
+
+        <div class="list-index-filters">
+            <label>Visibility <select id="listIndexVisibility"><option value="all">All</option><option value="public">Public</option><option value="private">Private</option></select></label>
+            <label>Sort by <select id="listIndexSort"><option value="name">List Name</option><option value="updated">When Updated</option><option value="count">Series Count</option></select></label>
+            <label>Show <select id="listIndexShow"><option value="all">All</option><option value="with-series">With Series</option><option value="empty">Empty Lists</option></select></label>
+        </div>
+
+        <div class="lists-grid" id="myListsContainer">
+            <!-- User's personal lists will be populated here -->
+        </div>
+
+        <div id="listDetails" class="list-details" hidden>
+            <div class="section-header">
+                <div>
+                    <p class="section-label">LIST</p>
+                    <h2 id="listDetailsTitle"></h2>
+                    <p id="listDetailsDescription" class="list-details-description"></p>
+                </div>
+                <button type="button" class="view-profile-btn" onclick="closeListDetails()">Back to My Lists</button>
+            </div>
+            <div id="listDetailsGrid" class="films-grid"></div>
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CREATE LIST MODAL
+    ========================== -->
+
+    <div id="createListModal" class="list-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCreateListModal()">&times;</span>
+            
+            <h2>Create New List</h2>
+            
+            <form id="createListForm" class="list-form">
+                <div class="form-group">
+                    <label for="listName">List Name</label>
+                    <input type="text" id="listName" name="listName" placeholder="E.g., My Favorite Sci-Fi Films" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="listDescription">Description</label>
+                    <textarea id="listDescription" name="listDescription" rows="4" placeholder="Describe your list..."></textarea>
+                </div>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="listPrivate" name="listPrivate">
+                    <label for="listPrivate">Make this list private</label>
+                </div>
+                
+                <button type="submit" class="auth-submit-btn">Create List</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addSeriesModal" class="list-modal" style="display: none;">
+        <div class="modal-content add-series-modal-content">
+            <span class="close-modal" onclick="closeAddSeriesModal()">&times;</span>
+            <h2>Add Series</h2>
+            <p class="list-desc">Choose a series to add to your list.</p>
+            <input type="search" id="listSeriesSearch" class="list-series-search" placeholder="Search series..." aria-label="Search series to add">
+            <div id="listSeriesPicker" class="list-series-picker"></div>
+        </div>
+    </div>
+
+    <script src="css/script.js"></script>
+
+    <script>
+        function showCreateListModal() {
+            document.getElementById("createListModal").style.display = "block";
+        }
+
+        function closeCreateListModal() {
+            document.getElementById("createListModal").style.display = "none";
+        }
+
+        let activeListId = null;
+        let activeListCatalog = [];
+        let activeListAddedIds = new Set();
+        let listSearchRequest = 0;
+        const listIndexState = { visibility: "all", sort: "name", show: "all" };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!userManager.currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            displayUserLists();
+
+            document.getElementById("listProfileName").textContent = userManager.currentUser.username;
+            document.getElementById("listProfileAvatar").textContent = (userManager.currentUser.username || "U").charAt(0).toUpperCase();
+            ["listIndexVisibility", "listIndexSort", "listIndexShow"].forEach(id => {
+                document.getElementById(id).addEventListener("change", event => {
+                    listIndexState[id.replace("listIndex", "").toLowerCase()] = event.target.value;
+                    displayUserLists();
+                });
+            });
+
+            const addToListId = new URLSearchParams(window.location.search).get("addTo");
+            if (addToListId) openAddSeriesModal(addToListId);
+
+            // Handle create list form
+            document.getElementById("createListForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById("listName").value;
+                const description = document.getElementById("listDescription").value;
+                const isPrivate = document.getElementById("listPrivate").checked;
+                
+                showConfirmDialog("Create this list?", () => {
+                    const list = userManager.createList(name, description);
+                    list.isPrivate = isPrivate;
+                    userManager.updateProfile({ lists: userManager.currentUser.lists });
+                    document.getElementById("createListForm").reset();
+                    closeCreateListModal();
+                    displayUserLists();
+                    showMessageDialog("✓ List created successfully!");
+                });
+                
+                if (document.getElementById("appMessageDialog")) {
+                    document.getElementById("appMessageDialog").addEventListener("click", function handleCancelRefresh(event) {
+                        if (event.target.closest("[data-message-cancel]")) {
+                            document.getElementById("createListForm").reset();
+                            closeCreateListModal();
+                            this.removeEventListener("click", handleCancelRefresh);
+                        }
+                    });
+                }
+            });
+        });
+
+        async function displayUserLists() {
+            const container = document.getElementById("myListsContainer");
+            container.innerHTML = "";
+            let lists = [...(userManager.currentUser.lists || [])];
+
+            lists = lists.filter(list => {
+                const visibilityMatches = listIndexState.visibility === "all" || (listIndexState.visibility === "private" ? list.isPrivate : !list.isPrivate);
+                const showMatches = listIndexState.show === "all" || (listIndexState.show === "empty" ? !(list.movies || []).length : (list.movies || []).length > 0);
+                return visibilityMatches && showMatches;
+            });
+
+            if (listIndexState.sort === "updated") lists.sort((a, b) => Number(b.id) - Number(a.id));
+            if (listIndexState.sort === "count") lists.sort((a, b) => (b.movies || []).length - (a.movies || []).length);
+            if (listIndexState.sort === "name") lists.sort((a, b) => a.name.localeCompare(b.name));
+
+            if (!lists.length) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <p>You haven't created any lists yet</p>
+                        <button class="primary-btn" onclick="showCreateListModal()">Create Your First List →</button>
+                    </div>
+                `;
+                return;
+            }
+
+            userManager.currentUser.lists.forEach(list => {
+                const listCard = document.createElement("div");
+                listCard.className = "list-card";
+                
+                const posterImages = (list.movies || []).slice(0, 4).map(movieId => {
+                    const movie = userManager.currentUser.movieRecords?.[movieId] || movies.find(m => String(m.id) === String(movieId));
+                    return movie ? `<img src="${movie.poster}" alt="${movie.title}">` : "";
+                }).join("");
+
+                listCard.innerHTML = `
+                    <button type="button" class="list-remove-btn" onclick="removeList(${list.id}, event)" aria-label="Remove ${list.name} list">Remove</button>
+                    <div class="list-poster-group">
+                        ${posterImages || '<p style="text-align:center;color:#666;">No movies yet</p>'}
+                    </div>
+                    
+                    <h3>${list.name}</h3>
+                    
+                    <p class="list-desc">${list.description}</p>
+                    
+                    <div class="list-stats">
+                        <span>Series ${(list.movies || []).length}</span>
+                        <span>${list.isPrivate ? '🔒 Private' : '🌍 Public'}</span>
+                    </div>
+                    
+                    <div class="list-card-actions">
+                        <button class="primary-btn" onclick="openAddSeriesModal(${list.id})">+ Add Series</button>
+                        <button class="view-profile-btn" onclick="viewList(${list.id})">View List</button>
+                    </div>
+                `;
+                
+                container.appendChild(listCard);
+            });
+        }
+
+        function viewList(listId) {
+            window.location.href = `list-view.html?listId=${encodeURIComponent(listId)}`;
+        }
+
+        function removeList(listId, event) {
+            event.stopPropagation();
+            const list = userManager.currentUser.lists.find(item => item.id === listId);
+            if (!list) return;
+
+            showConfirmDialog(`Remove the list "${list.name}"?`, () => {
+                userManager.currentUser.lists = userManager.currentUser.lists.filter(item => item.id !== listId);
+                userManager.updateProfile({ lists: userManager.currentUser.lists });
+                closeListDetails();
+                displayUserLists();
+                showMessageDialog("✓ List removed successfully!");
+            });
+        }
+
+        function closeListDetails() {
+            document.getElementById("listDetails").hidden = true;
+        }
+
+        function renderListSeriesPicker(searchTerm = "") {
+            const picker = document.getElementById("listSeriesPicker");
+            const normalizedSearch = searchTerm.trim().toLowerCase();
+            const filteredCatalog = activeListCatalog.filter(movie => movie.title.toLowerCase().includes(normalizedSearch));
+
+            if (!filteredCatalog.length) {
+                picker.innerHTML = '<p class="list-series-empty">No series found.</p>';
+                return;
+            }
+
+            picker.innerHTML = filteredCatalog.map(movie => `
+                <button type="button" class="list-series-option ${activeListAddedIds.has(String(movie.id)) ? "is-added" : ""}" data-series-id="${movie.id}">
+                    <img src="${movie.poster}" alt="${movie.title}">
+                    <span>${movie.title}</span>
+                    <small>${activeListAddedIds.has(String(movie.id)) ? "Added" : "+ Add"}</small>
+                </button>
+            `).join("");
+
+            picker.querySelectorAll("[data-series-id]").forEach(option => {
+                option.addEventListener("click", () => {
+                    const movieId = option.dataset.seriesId;
+                    const movie = activeListCatalog.find(item => String(item.id) === String(movieId));
+                    showConfirmDialog(`Add ${movie.title} to this list?`, () => {
+                        if (userManager.addMovieToList(activeListId, movieId)) {
+                            userManager.updateProfile({ movieRecords: { ...userManager.currentUser.movieRecords, [movieId]: movie } });
+                            activeListAddedIds.add(String(movieId));
+                            renderListSeriesPicker(document.getElementById("listSeriesSearch").value);
+                            displayUserLists();
+                            showMessageDialog("✓ Series added to your list!");
+                        }
+                    });
+                });
+            });
+        }
+
+        async function openAddSeriesModal(listId) {
+            const list = userManager.currentUser.lists.find(item => item.id === listId || String(item.id) === String(listId));
+            if (!list) return;
+
+            activeListId = list.id;
+            activeListCatalog = await fetchTVMazeMovieCatalog();
+            activeListAddedIds = new Set((list.movies || []).map(id => String(id)));
+            document.getElementById("listSeriesSearch").value = "";
+            renderListSeriesPicker();
+
+            document.getElementById("addSeriesModal").style.display = "block";
+        }
+
+        function closeAddSeriesModal() {
+            activeListId = null;
+            document.getElementById("addSeriesModal").style.display = "none";
+        }
+
+        document.getElementById("listSeriesSearch").addEventListener("input", async event => {
+            const searchTerm = event.target.value.trim();
+            const requestId = ++listSearchRequest;
+
+            if (!searchTerm) {
+                activeListCatalog = await fetchTVMazeMovieCatalog();
+                if (requestId === listSearchRequest) renderListSeriesPicker();
+                return;
+            }
+
+            document.getElementById("listSeriesPicker").innerHTML = '<p class="list-series-empty">Searching TVMaze...</p>';
+            const results = await fetchTVMazeSearch(searchTerm);
+            if (requestId !== listSearchRequest) return;
+
+            activeListCatalog = results;
+            renderListSeriesPicker(searchTerm);
+        });
+    </script>
+
+</body>
+
+</html>

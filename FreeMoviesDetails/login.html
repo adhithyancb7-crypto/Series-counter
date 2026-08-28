@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="search-btn" onclick="document.getElementById('searchModal').style.display='block'">
+                Search
+            </button>
+
+            <button class="login-btn" onclick="window.location.href='login.html'">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         LOGIN FORM
+    ========================== -->
+
+    <section class="auth-section">
+
+        <div class="auth-container">
+
+            <div class="auth-box">
+
+                <h1>Log In</h1>
+
+                <p class="auth-subtitle">Welcome back to Free Series Details</p>
+
+                <form id="loginForm" class="auth-form">
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">Log In</button>
+
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+                    <p><a href="forgot-password.html">Forgot password?</a></p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.userManager && userManager.currentUser) {
+                window.location.href = "profile.html";
+            }
+
+            const loginForm = document.getElementById("loginForm");
+            if (loginForm) {
+                loginForm.addEventListener("submit", function () {
+                    sessionStorage.removeItem("ownerAccess");
+                }, { once: true });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+# Private/local configuration
+.env
+.env.*
+!.env.example
+
+# OMDb/API configuration files containing private keys
+omdb-config.js
+css/omdb-config.js
+
+# Dependencies
+node_modules/
+
+# Editor/system files
+.vscode/
+.DS_Store
+Thumbs.db

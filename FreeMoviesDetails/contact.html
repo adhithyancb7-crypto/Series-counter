@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="search-btn" onclick="document.getElementById('searchModal').style.display='block'">
+                Search
+            </button>
+
+            <button class="login-btn" onclick="window.location.href='login.html'">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you</p>
+    </section>
+
+
+
+    <!-- =========================
+         CONTACT CONTENT
+    ========================== -->
+
+    <section class="section">
+
+        <div class="contact-container">
+
+            <div class="contact-info">
+
+                <div class="info-box">
+
+                    <h3>📧 Email</h3>
+
+                    <p>For general inquiries: <strong>info@freemoviesdetails.com</strong></p>
+
+                    <p>For support: <strong>support@freemoviesdetails.com</strong></p>
+
+                </div>
+
+                <div class="info-box">
+
+                    <h3>📱 Social Media</h3>
+
+                    <p>Follow us on:</p>
+
+                    <ul class="social-links">
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ul>
+
+                </div>
+
+                <div class="info-box">
+
+                    <h3>🕐 Response Time</h3>
+
+                    <p>We aim to respond to all inquiries within 24-48 hours during business days.</p>
+
+                </div>
+
+            </div>
+
+            <div class="contact-form-container">
+
+                <h2>Send us a Message</h2>
+
+                <form id="contactForm" class="contact-form">
+
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="What is this about?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Your message..." rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="contact-submit-btn">Send Message</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+
+</body>
+
+</html>

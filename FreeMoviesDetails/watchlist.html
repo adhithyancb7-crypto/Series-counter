@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Watchlist - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'" id="loginBtn">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'" id="signupBtn">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>My Watchlist</h1>
+        <p>Films you want to watch</p>
+    </section>
+
+
+
+    <!-- =========================
+         WATCHLIST CONTENT
+    ========================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">WATCHLIST</p>
+
+                <h2>Your Watchlist</h2>
+
+            </div>
+
+            <div class="watched-search-form">
+                <input type="text" id="watchlistSearch" class="search-input-small" placeholder="Search watchlist..." aria-label="Search watchlist">
+                <select id="watchlistSort" class="watchlist-sort" aria-label="Sort watchlist">
+                    <option value="added">Recently added</option>
+                    <option value="title">Title A-Z</option>
+                    <option value="rating">Highest rated</option>
+                    <option value="year">Newest year</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="films-grid" id="watchlistContainer">
+            <!-- Watchlist movies will be populated here -->
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!userManager.currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            populateWatchlist();
+
+            const searchInput = document.getElementById("watchlistSearch");
+            const sortInput = document.getElementById("watchlistSort");
+            const filterWatchlist = function() {
+                const query = searchInput.value.toLowerCase().trim();
+                const cards = document.querySelectorAll("#watchlistContainer .movie-card");
+                let visibleCount = 0;
+                
+                cards.forEach(card => {
+                    const title = card.querySelector(".movie-title").textContent.toLowerCase();
+                    const isVisible = title.includes(query);
+                    card.style.display = isVisible ? "block" : "none";
+                    if (isVisible) visibleCount += 1;
+                });
+                let noResults = document.getElementById("watchlistNoResults");
+                if (!noResults) {
+                    noResults = document.createElement("p");
+                    noResults.id = "watchlistNoResults";
+                    noResults.className = "watched-no-results";
+                    document.getElementById("watchlistContainer").appendChild(noResults);
+                }
+                noResults.textContent = visibleCount ? "" : "No saved series match your search.";
+                noResults.style.display = visibleCount ? "none" : "block";
+            };
+
+            searchInput.addEventListener("input", filterWatchlist);
+            sortInput.addEventListener("change", function() {
+                populateWatchlist(sortInput.value);
+                filterWatchlist();
+            });
+        });
+    </script>
+
+</body>
+
+</html>

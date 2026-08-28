@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="omdb-config.js"></script>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html" class="active">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors..." aria-label="Search movies">
+                <button type="button" class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>Browse Films</h1>
+        <p>Discover thousands of films from around the world</p>
+    </section>
+
+
+
+    <!-- =========================
+         FILTERS
+    ========================== -->
+
+    <section class="filters-section">
+
+        <div class="filters-container">
+
+            <div class="filter-group">
+                <label for="genre">Genre</label>
+                <select id="genre">
+                    <option value="">All Genres</option>
+                    <option value="action">Action</option>
+                    <option value="drama">Drama</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="scifi">Sci-Fi</option>
+                    <option value="thriller">Thriller</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="year">Year</label>
+                <select id="year">
+                    <option value="">All Years</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="rating">Rating</label>
+                <select id="rating">
+                    <option value="">All Ratings</option>
+                    <option value="5">★★★★★ (5.0)</option>
+                    <option value="4">★★★★ (4.0+)</option>
+                    <option value="3">★★★ (3.0+)</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="sort">Sort By</label>
+                <select id="sort">
+                    <option value="popular">Popular</option>
+                    <option value="rating">Top Rated</option>
+                    <option value="recent">Recently Added</option>
+                    <option value="alphabetical">Alphabetical</option>
+                </select>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         FILMS GRID
+    ========================== -->
+
+    <section class="section">
+
+        <div class="films-grid" id="filmsGrid">
+            <!-- Films will be loaded here -->
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+
+</body>
+
+</html>

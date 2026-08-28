@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lists - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html" class="active">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="search-btn" onclick="document.getElementById('searchModal').style.display='block'">
+                Search
+            </button>
+
+            <button class="login-btn" onclick="window.location.href='login.html'">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>Movie Lists</h1>
+        <p>Explore curated lists created by our community</p>
+    </section>
+
+
+
+    <!-- =========================
+         LISTS GRID
+    ========================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">COMMUNITY LISTS</p>
+
+                <h2>Popular Lists</h2>
+
+            </div>
+
+            <button class="create-list-btn">+ Create List</button>
+
+        </div>
+
+        <div class="lists-grid">
+
+            <div class="list-card">
+
+                <div class="list-poster-group">
+                    <img src="assets/images/Inception.jfif" alt="Movie 1">
+                    <img src="assets/images/Interstellar Poster.jfif" alt="Movie 2">
+                    <img src="assets/images/THE DARK KNIGHT.png" alt="Movie 3">
+                    <img src="assets/images/Parasite poster.jfif" alt="Movie 4">
+                </div>
+
+                <h3>Best Sci-Fi Movies</h3>
+
+                <p class="list-meta">Created by <strong>Movie Enthusiast</strong></p>
+
+                <p class="list-desc">A collection of the greatest science fiction films of all time</p>
+
+                <div class="list-stats">
+                    <span>📽️ 15 films</span>
+                    <span>❤️ 342 likes</span>
+                </div>
+
+            </div>
+
+            <div class="list-card">
+
+                <div class="list-poster-group">
+                    <img src="assets/images/THE DARK KNIGHT.png" alt="Movie 1">
+                    <img src="assets/images/Inception.jfif" alt="Movie 2">
+                    <img src="assets/images/Parasite poster.jfif" alt="Movie 3">
+                    <img src="assets/images/Interstellar Poster.jfif" alt="Movie 4">
+                </div>
+
+                <h3>Masterpiece Dramas</h3>
+
+                <p class="list-meta">Created by <strong>Drama Fan</strong></p>
+
+                <p class="list-desc">Award-winning dramatic films that touch the heart</p>
+
+                <div class="list-stats">
+                    <span>📽️ 12 films</span>
+                    <span>❤️ 289 likes</span>
+                </div>
+
+            </div>
+
+            <div class="list-card">
+
+                <div class="list-poster-group">
+                    <img src="assets/images/Parasite poster.jfif" alt="Movie 1">
+                    <img src="assets/images/Interstellar Poster.jfif" alt="Movie 2">
+                    <img src="assets/images/Inception.jfif" alt="Movie 3">
+                    <img src="assets/images/THE DARK KNIGHT.png" alt="Movie 4">
+                </div>
+
+                <h3>Films of the Decade</h3>
+
+                <p class="list-meta">Created by <strong>Critic</strong></p>
+
+                <p class="list-desc">The most influential and acclaimed films from recent years</p>
+
+                <div class="list-stats">
+                    <span>📽️ 20 films</span>
+                    <span>❤️ 521 likes</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+
+</body>
+
+</html>

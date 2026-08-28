@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html" class="active">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="search-btn" onclick="document.getElementById('searchModal').style.display='block'">
+                Search
+            </button>
+
+            <button class="login-btn" onclick="window.location.href='login.html'">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>Latest Reviews</h1>
+        <p>Read what the community thinks about films</p>
+    </section>
+
+
+
+    <!-- =========================
+         REVIEWS FEED
+    ========================== -->
+
+    <section class="section reviews-feed">
+
+        <div class="reviews-list" id="publicReviews">
+            <p class="review-empty">Loading community reviews...</p>
+        </div>
+
+        <!-- Static review examples are replaced by saved community reviews. -->
+        <div class="reviews-list" style="display:none;">
+
+            <!-- REVIEW 1 -->
+
+            <article class="review-card-full">
+
+                <div class="review-header">
+
+                    <div class="review-user-info">
+
+                        <div class="avatar">M</div>
+
+                        <div>
+
+                            <strong>Movie Enthusiast</strong>
+
+                            <p>reviewed Interstellar</p>
+
+                        </div>
+
+                    </div>
+
+                    <p class="review-date">2 days ago</p>
+
+                </div>
+
+                <div class="review-content">
+
+                    <div class="review-rating">★★★★★ (5.0)</div>
+
+                    <h3>A Masterpiece of Sci-Fi Cinema</h3>
+
+                    <p>Christopher Nolan's Interstellar is nothing short of a masterpiece. The film brilliantly weaves complex scientific concepts with deeply human emotions. Matthew McConaughey's performance is emotional and grounded, making us believe in his character's sacrifice.</p>
+
+                    <p>The visuals are stunning, the score is hauntingly beautiful, and the narrative is thought-provoking. It's a film that stays with you long after the credits roll. Highly recommended for anyone who loves science fiction and profound storytelling.</p>
+
+                </div>
+
+                <div class="review-actions">
+                    <button>👍 Like (24)</button>
+                    <button>💬 Reply</button>
+                </div>
+
+            </article>
+
+            <!-- REVIEW 2 -->
+
+            <article class="review-card-full">
+
+                <div class="review-header">
+
+                    <div class="review-user-info">
+
+                        <div class="avatar">D</div>
+
+                        <div>
+
+                            <strong>Drama Fan</strong>
+
+                            <p>reviewed Parasite</p>
+
+                        </div>
+
+                    </div>
+
+                    <p class="review-date">5 days ago</p>
+
+                </div>
+
+                <div class="review-content">
+
+                    <div class="review-rating">★★★★★ (5.0)</div>
+
+                    <h3>Social Commentary at Its Finest</h3>
+
+                    <p>Bong Joon-ho's Parasite is a brilliant social thriller that expertly blends dark humor with serious commentary on class inequality. Every frame is meticulously crafted, and the entire cast delivers exceptional performances.</p>
+
+                    <p>The twist that comes midway through the film completely reframes the narrative, making for an unforgettable viewing experience. A deserving Best Picture winner that will be remembered for generations.</p>
+
+                </div>
+
+                <div class="review-actions">
+                    <button>👍 Like (18)</button>
+                    <button>💬 Reply</button>
+                </div>
+
+            </article>
+
+            <!-- REVIEW 3 -->
+
+            <article class="review-card-full">
+
+                <div class="review-header">
+
+                    <div class="review-user-info">
+
+                        <div class="avatar">A</div>
+
+                        <div>
+
+                            <strong>Action Junkie</strong>
+
+                            <p>reviewed The Dark Knight</p>
+
+                        </div>
+
+                    </div>
+
+                    <p class="review-date">1 week ago</p>
+
+                </div>
+
+                <div class="review-content">
+
+                    <div class="review-rating">★★★★★ (5.0)</div>
+
+                    <h3>The Best Superhero Film Ever Made</h3>
+
+                    <p>The Dark Knight transcends the superhero genre. Heath Ledger's Joker is one of cinema's most captivating villains, bringing an anarchic energy that elevates the entire film. Christopher Nolan's direction is flawless.</p>
+
+                    <p>The action sequences are thrilling, the plot is intelligent, and the themes about chaos versus order are deeply explored. This is essential viewing for any film lover.</p>
+
+                </div>
+
+                <div class="review-actions">
+                    <button>👍 Like (42)</button>
+                    <button>💬 Reply</button>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+
+</body>
+
+</html>

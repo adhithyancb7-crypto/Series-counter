@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="search-btn" onclick="document.getElementById('searchModal').style.display='block'">
+                Search
+            </button>
+
+            <button class="login-btn" onclick="window.location.href='login.html'">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         SIGNUP FORM
+    ========================== -->
+
+    <section class="auth-section">
+
+        <div class="auth-container">
+
+            <div class="auth-box">
+
+                <h1>Create Account</h1>
+
+                <p class="auth-subtitle">Join Free Series Details today</p>
+
+                <form id="signupForm" class="auth-form">
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the Terms of Service</label>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">Sign Up</button>
+
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Log in here</a></p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="css/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.userManager && userManager.currentUser) {
+                window.location.href = "profile.html";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

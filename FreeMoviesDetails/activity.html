@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-private-page="activity">
+    <header class="navbar"><div class="logo"><a href="profile.html">Free Series Details</a></div><nav><a href="index.html">Home</a><a href="films.html">Series</a><a href="profile.html" class="active">My Account</a></nav><div class="nav-actions"><button class="user-btn" onclick="userLogout()">Log out</button></div></header>
+    <section class="section activity-page">
+        <div class="activity-profile-strip">
+            <div class="activity-avatar" id="privateAvatar">U</div>
+            <div>
+                <p class="section-label">YOUR ACTIVITY</p>
+                <h1 id="privateUsername">Username</h1>
+                <nav class="profile-dashboard-nav"><a class="is-active" href="activity.html">Activity</a><a href="watched.html">Series</a><a href="diary.html">Diary</a><a href="user-reviews.html">Reviews</a><a href="watchlist.html">Watchlist</a><a href="my-lists.html">Lists</a><a href="likes.html">Likes</a><a href="network.html">Network</a></nav>
+            </div>
+        </div>
+        <div class="activity-layout">
+            <main class="activity-main">
+                <div class="activity-tabs" role="tablist"><button class="is-active" data-activity-filter="all">All</button><button data-activity-filter="you">You</button><button data-activity-filter="incoming">Incoming</button></div>
+                <div id="privateContent" class="activity-feed"></div>
+            </main>
+            <aside class="activity-sidebar"><h2>Following</h2><div id="activityFollowing"></div></aside>
+        </div>
+    </section>
+    <script src="css/script.js"></script><script src="css/private-pages.js"></script>
+</body>
+</html>

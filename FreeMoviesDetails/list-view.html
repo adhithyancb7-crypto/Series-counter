@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Free Series Details</a></div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Series</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+        </nav>
+        <div class="nav-actions">
+            <button class="user-btn" onclick="userLogout()">Log out</button>
+        </div>
+    </header>
+
+    <main class="list-view-page">
+        <section class="list-view-header">
+            <a class="list-back-link" href="my-lists.html">Back to My Lists</a>
+            <div class="list-view-heading">
+                <div>
+                    <p class="section-label">PERSONAL LIST</p>
+                    <h1 id="listViewTitle">Loading list...</h1>
+                    <p id="listViewDescription" class="list-view-description"></p>
+                </div>
+                <div class="list-view-actions">
+                    <span id="listViewVisibility" class="list-view-visibility"></span>
+                    <button type="button" class="create-list-btn" onclick="openListAddSeries()">+ Add Series</button>
+                    <button type="button" class="list-delete-action" onclick="deleteCurrentList()">Delete List</button>
+                </div>
+            </div>
+            <div class="list-view-tabs" role="tablist" aria-label="List display mode">
+                <button type="button" class="list-view-tab is-active" data-view-mode="grid">Grid</button>
+                <button type="button" class="list-view-tab" data-view-mode="list">List</button>
+            </div>
+            <div class="list-view-filters">
+                <label>Visibility <select id="listVisibilityFilter"><option value="all">All</option><option value="watched">Watched</option><option value="unwatched">Unwatched</option></select></label>
+                <label>Sort by <select id="listSortFilter"><option value="order">List Order</option><option value="title">Title</option><option value="year">Year</option><option value="rating">Rating</option></select></label>
+                <label>Service <select id="listServiceFilter"><option value="all">All Services</option></select></label>
+                <label>Genre <select id="listGenreFilter"><option value="all">All Genres</option></select></label>
+                <label>Decade <select id="listDecadeFilter"><option value="all">All Decades</option></select></label>
+            </div>
+            <div class="list-view-meta">
+                <strong id="listViewCount">0 series</strong>
+                <span id="listViewDate"></span>
+                <span id="listViewWatched"></span>
+            </div>
+        </section>
+
+        <section class="list-view-content">
+            <div id="listViewGrid" class="films-grid"></div>
+        </section>
+    </main>
+
+    <script src="css/script.js"></script>
+    <script>
+        let currentList = null;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!userManager.currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const listId = new URLSearchParams(window.location.search).get("listId");
+            currentList = userManager.currentUser.lists.find(list => String(list.id) === String(listId));
+            if (!currentList) {
+                window.location.href = "my-lists.html";
+                return;
+            }
+
+            document.title = `${currentList.name} - Free Series Details`;
+            document.getElementById("listViewTitle").textContent = currentList.name;
+            document.getElementById("listViewDescription").textContent = currentList.description || "A personal collection of series.";
+            document.getElementById("listViewVisibility").textContent = currentList.isPrivate ? "Private list" : "Public list";
+            document.getElementById("listViewDate").textContent = currentList.createdDate ? `Created ${currentList.createdDate}` : "";
+            setupListFilters();
+            renderListView();
+        });
+
+        function getListMovies() {
+            return (currentList.movies || [])
+                .map(movieId => userManager.currentUser.movieRecords?.[movieId] || movies.find(movie => String(movie.id) === String(movieId)))
+                .filter(Boolean);
+        }
+
+        function renderListView() {
+            const allMovies = getListMovies();
+            const listMovies = filterAndSortListMovies(allMovies);
+            const grid = document.getElementById("listViewGrid");
+            document.getElementById("listViewCount").textContent = `${listMovies.length} of ${allMovies.length} series`;
+            const watchedCount = allMovies.filter(movie => userManager.currentUser.watched?.some(id => String(id) === String(movie.id))).length;
+            document.getElementById("listViewWatched").textContent = `${watchedCount} watched`;
+            grid.innerHTML = "";
+
+            if (!listMovies.length) {
+                grid.innerHTML = '<div class="empty-state list-view-empty"><p>This list is empty.</p><a class="primary-btn" href="my-lists.html">Add series from My Lists</a></div>';
+                return;
+            }
+
+            if (document.querySelector(".list-view-tab.is-active")?.dataset.viewMode === "list") {
+                renderListRows(listMovies, grid);
+            } else {
+                renderPosterGrid(listMovies, grid);
+            }
+        }
+
+        function setupListFilters() {
+            const allMovies = getListMovies();
+            const values = {
+                listServiceFilter: [...new Set(allMovies.map(movie => movie.director || "TVMaze").filter(Boolean))],
+                listGenreFilter: [...new Set(allMovies.flatMap(movie => String(movie.genre || "Series").split(",").map(value => value.trim())).filter(Boolean))],
+                listDecadeFilter: [...new Set(allMovies.map(movie => movie.year ? `${Math.floor(movie.year / 10) * 10}s` : "Unknown"))].sort()
+            };
+
+            Object.entries(values).forEach(([id, options]) => {
+                const select = document.getElementById(id);
+                select.innerHTML += options.map(value => `<option value="${value}">${value}</option>`).join("");
+                select.addEventListener("change", renderListView);
+            });
+            document.getElementById("listSortFilter").addEventListener("change", renderListView);
+            document.getElementById("listVisibilityFilter").addEventListener("change", renderListView);
+            document.querySelectorAll("[data-view-mode]").forEach(button => button.addEventListener("click", () => {
+                document.querySelectorAll("[data-view-mode]").forEach(item => item.classList.remove("is-active"));
+                button.classList.add("is-active");
+                renderListView();
+            }));
+        }
+
+        function filterAndSortListMovies(moviesInList) {
+            const visibility = document.getElementById("listVisibilityFilter").value;
+            const service = document.getElementById("listServiceFilter").value;
+            const genre = document.getElementById("listGenreFilter").value;
+            const decade = document.getElementById("listDecadeFilter").value;
+            const sort = document.getElementById("listSortFilter").value;
+            const watched = userManager.currentUser.watched || [];
+            const filtered = moviesInList.filter(movie => {
+                const isWatched = watched.some(id => String(id) === String(movie.id));
+                const movieGenres = String(movie.genre || "Series").split(",").map(value => value.trim());
+                const movieDecade = movie.year ? `${Math.floor(movie.year / 10) * 10}s` : "Unknown";
+                return (visibility === "all" || (visibility === "watched" ? isWatched : !isWatched)) &&
+                    (service === "all" || (movie.director || "TVMaze") === service) &&
+                    (genre === "all" || movieGenres.includes(genre)) &&
+                    (decade === "all" || movieDecade === decade);
+            });
+
+            if (sort === "title") filtered.sort((a, b) => a.title.localeCompare(b.title));
+            if (sort === "year") filtered.sort((a, b) => (Number(a.year) || 0) - (Number(b.year) || 0));
+            if (sort === "rating") filtered.sort((a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0));
+            return filtered;
+        }
+
+        function renderPosterGrid(listMovies, grid) {
+            listMovies.forEach(movie => {
+                const tile = document.createElement("button");
+                tile.type = "button";
+                tile.className = "list-poster-tile";
+                tile.innerHTML = `<img src="${movie.poster}" alt="${movie.title}"><span>${movie.title}</span><small>${movie.year || ""}</small>`;
+                tile.addEventListener("click", () => showMovieModal(movie));
+                grid.appendChild(tile);
+            });
+        }
+
+        function renderListRows(listMovies, grid) {
+            listMovies.forEach(movie => {
+                const row = document.createElement("article");
+                row.className = "list-detail-row";
+                row.innerHTML = `<img src="${movie.poster}" alt="${movie.title}"><div><h3>${movie.title}</h3><p>${movie.year || ""} · ${movie.genre || "Series"} · ★ ${(Number(movie.rating) || 0).toFixed(1)}</p><button type="button" class="view-profile-btn">View Details</button></div>`;
+                row.querySelector("button").addEventListener("click", () => showMovieModal(movie));
+                grid.appendChild(row);
+            });
+        }
+
+        function openListAddSeries() {
+            window.location.href = `my-lists.html?addTo=${encodeURIComponent(currentList.id)}`;
+        }
+
+        function deleteCurrentList() {
+            showConfirmDialog(`Delete the list "${currentList.name}"?`, () => {
+                userManager.currentUser.lists = userManager.currentUser.lists.filter(list => list.id !== currentList.id);
+                userManager.updateProfile({ lists: userManager.currentUser.lists });
+                window.location.href = "my-lists.html";
+            });
+        }
+    </script>
+</body>
+</html>

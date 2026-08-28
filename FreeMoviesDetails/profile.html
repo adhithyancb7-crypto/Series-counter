@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'" id="loginBtn">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'" id="signupBtn">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="page-hero">
+        <h1>My Profile</h1>
+        <p>Manage your account and preferences</p>
+    </section>
+
+
+
+    <!-- =========================
+         PROFILE CONTENT
+    ========================== -->
+
+    <section class="section">
+
+        <div class="profile-dashboard">
+            <div class="profile-dashboard-header">
+                <div class="profile-dashboard-avatar-wrap">
+                    <div class="profile-dashboard-avatar" id="dashboardAvatar">U</div>
+                    <a class="profile-avatar-edit" id="profileEditLink" href="profile-edit.html">Edit Profile</a>
+                </div>
+                <div>
+                    <p class="section-label">PROFILE</p>
+                    <h1 id="dashboardUsername">Username</h1>
+                    <p id="dashboardBio" class="profile-dashboard-bio">Your series journey starts here.</p>
+                    <p id="dashboardLocation" class="profile-dashboard-location"></p>
+                </div>
+                <button type="button" class="profile-follow-btn" id="profileFollowButton" hidden>Follow</button>
+            </div>
+
+            <nav class="profile-dashboard-nav" aria-label="Profile sections">
+                <a class="is-active" href="profile.html">Activity</a>
+                <a href="watched.html">Series</a>
+                <a href="diary.html">Diary</a>
+                <a href="user-reviews.html">Reviews</a>
+                <a href="watchlist.html">Watchlist</a>
+                <a href="my-lists.html">Lists</a>
+                <a href="likes.html">Likes</a>
+                <a href="tags.html">Tags</a>
+                <a href="network.html">Network</a>
+            </nav>
+
+            <div class="profile-dashboard-stats">
+                <div><strong id="dashboardWatchedCount">0</strong><span>Watched</span></div>
+                <div><strong id="dashboardListCount">0</strong><span>Lists</span></div>
+                <div><strong id="dashboardFollowingCount">0</strong><span>Following</span></div>
+                <div><strong id="dashboardFollowerCount">0</strong><span>Followers</span></div>
+            </div>
+
+            <div class="profile-dashboard-grid">
+                <section class="dashboard-panel dashboard-favorites">
+                    <div class="dashboard-panel-heading"><h2>Favorite Series</h2><a href="likes.html">More</a></div>
+                    <div id="dashboardFavorites" class="dashboard-poster-row"></div>
+                </section>
+                <section class="dashboard-panel">
+                    <div class="dashboard-panel-heading"><h2>Recent Activity</h2><a href="activity.html">More</a></div>
+                    <div id="dashboardActivity" class="dashboard-activity-list"></div>
+                </section>
+                <section class="dashboard-panel">
+                    <div class="dashboard-panel-heading"><h2>Recent Reviews</h2><a href="user-reviews.html">More</a></div>
+                    <div id="dashboardReviews" class="dashboard-review-list"></div>
+                </section>
+                <section class="dashboard-panel">
+                    <div class="dashboard-panel-heading"><h2>Recent Lists</h2><a href="my-lists.html">More</a></div>
+                    <div id="dashboardLists" class="dashboard-list-summary"></div>
+                </section>
+                <section class="dashboard-panel dashboard-tags-panel">
+                    <div class="dashboard-panel-heading"><h2>Tags</h2><a href="tags.html">More</a></div>
+                    <div id="dashboardTags" class="dashboard-tags"></div>
+                </section>
+            </div>
+        </div>
+
+        
+    </section>
+
+    <script src="css/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!userManager.currentUser) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const currentUser = userManager.currentUser;
+            const profileUserId = new URLSearchParams(window.location.search).get("user");
+            let user = currentUser;
+            if (profileUserId && String(profileUserId) !== String(currentUser.id)) {
+                const users = JSON.parse(localStorage.getItem("users")) || {};
+                const targetEntry = Object.values(users).find(candidate => String(candidate.id) === String(profileUserId));
+                if (targetEntry) user = targetEntry;
+            }
+            const getMovie = movieId => user.movieRecords?.[movieId] || movies.find(movie => String(movie.id) === String(movieId));
+            const favoriteMovies = (user.likes || []).map(getMovie).filter(Boolean).slice(0, 4);
+
+            document.getElementById("dashboardUsername").textContent = user.username;
+            document.getElementById("dashboardBio").textContent = user.bio || "Your series journey starts here.";
+            document.getElementById("dashboardLocation").textContent = user.email || "Free Series Details member";
+            document.getElementById("dashboardWatchedCount").textContent = (user.watched || []).length;
+            document.getElementById("dashboardListCount").textContent = (user.lists || []).length;
+            document.getElementById("dashboardFollowingCount").textContent = (user.following || []).length;
+            document.getElementById("dashboardFollowerCount").textContent = (user.followers || []).length;
+            const isOwnProfile = String(user.id) === String(currentUser.id);
+            document.getElementById("profileEditLink").hidden = !isOwnProfile;
+            const followButton = document.getElementById("profileFollowButton");
+            followButton.hidden = isOwnProfile;
+            if (!isOwnProfile) {
+                const following = (currentUser.following || []).some(id => String(id) === String(user.id));
+                followButton.textContent = following ? "Following" : "Follow";
+                followButton.classList.toggle("is-following", following);
+                followButton.addEventListener("click", () => {
+                    if (followButton.classList.contains("is-following")) {
+                        userManager.unfollowUser(user.id);
+                        followButton.textContent = "Follow";
+                        followButton.classList.remove("is-following");
+                    } else if (userManager.followUser(user.id)) {
+                        followButton.textContent = "Following";
+                        followButton.classList.add("is-following");
+                    }
+                    document.getElementById("dashboardFollowingCount").textContent = (userManager.currentUser.following || []).length;
+                });
+            }
+
+            const avatar = document.getElementById("dashboardAvatar");
+            avatar.textContent = user.avatar || user.username.charAt(0).toUpperCase();
+            if (user.avatarImage) avatar.innerHTML = `<img src="${user.avatarImage}" alt="${user.username} profile picture">`;
+
+            document.getElementById("dashboardFavorites").innerHTML = favoriteMovies.length
+                ? favoriteMovies.map(movie => `<button type="button" class="dashboard-poster" data-dashboard-movie="${movie.id}"><img src="${movie.poster}" alt="${movie.title}"><span>${movie.title}</span></button>`).join("")
+                : '<p class="dashboard-empty">Add liked series to build your favorites.</p>';
+            document.querySelectorAll("[data-dashboard-movie]").forEach(button => button.addEventListener("click", () => showMovieModal(getMovie(button.dataset.dashboardMovie))));
+
+            document.getElementById("dashboardActivity").innerHTML = (user.watched || []).slice(-5).reverse().map(movieId => {
+                const movie = getMovie(movieId);
+                return movie ? `<p><strong>You watched</strong> ${movie.title}<span>${movie.year || ""}</span></p>` : "";
+            }).join("") || '<p class="dashboard-empty">No watched series yet.</p>';
+
+            document.getElementById("dashboardReviews").innerHTML = Object.entries(user.ratings || {}).slice(-4).reverse().map(([movieId, rating]) => {
+                const movie = getMovie(movieId);
+                return movie ? `<p><strong>${movie.title}</strong><span>★ ${Number(rating).toFixed(1)}</span></p>` : "";
+            }).join("") || '<p class="dashboard-empty">No reviews or ratings yet.</p>';
+
+            document.getElementById("dashboardLists").innerHTML = (user.lists || []).slice(-4).reverse().map(list => `<a href="list-view.html?listId=${list.id}"><strong>${list.name}</strong><span>${(list.movies || []).length} series</span></a>`).join("") || '<p class="dashboard-empty">No lists created yet.</p>';
+            document.getElementById("dashboardTags").innerHTML = (user.tags || []).length ? user.tags.map(tag => `<span>${tag}</span>`).join("") : '<p class="dashboard-empty">No tags added yet.</p>';
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Free Series Details</a></div>
+        <nav><a href="index.html">Public Home</a></nav>
+    </header>
+
+    <section class="page-hero">
+        <h1>Admin Login</h1>
+        <p>Private owner access</p>
+    </section>
+
+    <main class="section">
+        <div id="ownerLoginPanel" class="auth-container">
+            <div class="auth-box">
+                <h2 id="ownerLoginTitle">Admin sign in</h2>
+                <p class="auth-subtitle">Only the configured site owner can open this page.</p>
+                <form id="ownerLoginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="ownerEmail">Owner email</label>
+                        <input type="email" id="ownerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerPassword">Owner password</label>
+                        <input type="password" id="ownerPassword" required>
+                    </div>
+                    <button type="submit" class="auth-submit-btn">Sign in</button>
+                    <p id="ownerLoginMessage" class="auth-subtitle"></p>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="omdb-config.js"></script>
+    <script src="css/script.js"></script>
+    <script src="css/admin.js"></script>
+</body>
+</html>

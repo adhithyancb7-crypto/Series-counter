@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Diary - Free Series Details</title><link rel="stylesheet" href="css/style.css"></head>
+<body data-private-page="diary">
+<header class="navbar"><div class="logo"><a href="profile.html">Free Series Details</a></div><nav><a href="index.html">Home</a><a href="films.html">Series</a><a href="profile.html" class="active">My Account</a></nav><div class="nav-actions"><button class="user-btn" onclick="userLogout()">Log out</button></div></header>
+<section class="section diary-page">
+	<div class="diary-profile-strip"><div class="diary-avatar" id="privateAvatar">U</div><div><p class="section-label">YOUR DIARY</p><h1 id="privateUsername">Username</h1><nav class="profile-dashboard-nav"><a href="profile.html">Activity</a><a href="watched.html">Series</a><a class="is-active" href="diary.html">Diary</a><a href="user-reviews.html">Reviews</a><a href="watchlist.html">Watchlist</a><a href="my-lists.html">Lists</a><a href="likes.html">Likes</a><a href="tags.html">Tags</a></nav></div></div>
+	<div class="diary-controls">
+		<label>Visibility <select id="diaryVisibility"><option value="all">All</option><option value="rated">Rated</option><option value="unrated">Unrated</option></select></label>
+		<label>Sort by <select id="diarySort"><option value="date">Watched Date</option><option value="title">Title</option><option value="rating">Rating</option><option value="year">Year</option></select></label>
+		<label>Genre <select id="diaryGenre"><option value="all">All Genres</option></select></label>
+		<label>Decade <select id="diaryDecade"><option value="all">All Decades</option></select></label>
+		<label>Diary Year <select id="diaryYear"><option value="all">All Years</option></select></label>
+		<label>Month <select id="diaryMonth"><option value="all">All Months</option><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select></label>
+	</div>
+	<div id="privateContent" class="diary-content"></div>
+</section>
+<script src="css/script.js"></script><script src="css/private-pages.js"></script></body></html>

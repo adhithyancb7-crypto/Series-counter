@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free Series Details</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="omdb-config.js"></script>
+</head>
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'" id="loginBtn">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'" id="signupBtn">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="hero-series-backdrop" aria-hidden="true"></div>
+        <div class="hero-series-card" aria-live="polite">
+            <span class="hero-series-label">LATEST ON TVMAZE</span>
+            <strong id="heroSeriesTitle">Discovering series...</strong>
+            <span id="heroSeriesMeta"></span>
+        </div>
+
+        <div class="hero-content">
+
+            <p class="small-title">
+                YOUR MOVIE WORLD
+            </p>
+
+
+            <h1>
+                Discover your next
+                <span>favorite film.</span>
+            </h1>
+
+
+            <p class="hero-text">
+                Explore movies, discover reviews, create your
+                watchlist, rate films and share your movie journey.
+            </p>
+
+
+            <div class="hero-search">
+
+                <input
+                    type="text"
+                    placeholder="Search for a movie, actor or director..."
+                >
+
+                <button>
+                    Search
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         TRENDING MOVIES
+    ========================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">
+                    DISCOVER
+                </p>
+
+                <h2>
+                    Trending Movies
+                </h2>
+
+            </div>
+
+
+            <a href="films.html">
+                View all →
+            </a>
+
+        </div>
+
+
+        <!-- Movies will be added by JavaScript -->
+
+        <div
+            class="movie-grid"
+            id="trendingMovies">
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         POPULAR MOVIES
+    ========================== -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">
+                    POPULAR
+                </p>
+
+                <h2>
+                    Popular Right Now
+                </h2>
+
+            </div>
+
+
+            <a href="films.html">
+                Explore →
+            </a>
+
+        </div>
+
+
+
+        <div class="wide-grid" id="popularSeries">
+            <div class="feature-card">
+                <p>Loading popular series...</p>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         LATEST REVIEWS
+    ========================== -->
+
+    <section class="section reviews-section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">
+                    COMMUNITY
+                </p>
+
+                <h2>
+                    Latest Reviews
+                </h2>
+
+            </div>
+
+
+            <a href="reviews.html">
+                See all reviews →
+            </a>
+
+        </div>
+
+
+
+        <div class="reviews-grid" id="latestReviews">
+            <p class="review-empty">Loading recent reviews...</p>
+        </div>
+
+        <div class="reviews-grid" style="display:none;">
+
+
+            <!-- REVIEW 1 -->
+
+            <article class="review-card">
+
+
+                <div class="review-user">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Movie Lover
+                        </strong>
+
+                        <small>
+                            watched a film
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Movie Title
+                </h3>
+
+
+                <p class="stars">
+                    ★★★★★
+                </p>
+
+
+                <p>
+                    A really interesting movie with a great story,
+                    performances and atmosphere.
+                </p>
+
+
+                <span class="review-date">
+                    2 hours ago
+                </span>
+
+            </article>
+
+
+
+            <!-- REVIEW 2 -->
+
+            <article class="review-card">
+
+
+                <div class="review-user">
+
+                    <div class="avatar">
+                        M
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Film Fan
+                        </strong>
+
+                        <small>
+                            reviewed a film
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Another Movie
+                </h3>
+
+
+                <p class="stars">
+                    ★★★★☆
+                </p>
+
+
+                <p>
+                    The visuals and performances were excellent.
+                    Definitely worth watching.
+                </p>
+
+
+                <span class="review-date">
+                    5 hours ago
+                </span>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         WATCHLIST
+    ========================== -->
+
+    <section class="watchlist-section">
+
+
+        <div>
+
+            <p class="section-label">
+                YOUR MOVIES
+            </p>
+
+
+            <h2>
+                Keep track of what
+                you want to watch.
+            </h2>
+
+
+            <p>
+                Build your personal watchlist and never forget
+                a movie you want to see.
+            </p>
+
+
+            <button type="button" class="primary-btn" id="createWatchlistBtn">
+                Create your watchlist
+            </button>
+
+        </div>
+
+
+
+        <div class="watchlist-visual">
+
+            <div class="mini-poster">
+                MOVIE
+            </div>
+
+            <div class="mini-poster">
+                MOVIE
+            </div>
+
+            <div class="mini-poster">
+                MOVIE
+            </div>
+
+            <div class="mini-poster">
+                MOVIE
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+
+        <div class="footer-logo">
+            Free Series Details
+        </div>
+
+
+
+        <div class="footer-links">
+
+            <a href="#">
+                Films
+            </a>
+
+            <a href="#">
+                Lists
+            </a>
+
+            <a href="#">
+                Members
+            </a>
+
+            <a href="#">
+                Reviews
+            </a>
+
+            <a href="#">
+                About
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+            <a href="#">
+                Privacy
+            </a>
+
+        </div>
+
+
+
+        <p>
+            © 2026 Free Series Details. All rights reserved.
+        </p>
+
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="css/script.js"></script>
+
+</body>
+
+</html>

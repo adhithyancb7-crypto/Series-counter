@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Free Series Details</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="omdb-config.js"></script>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="index.html">Free Series Details</a>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="films.html">Films</a>
+            <a href="lists.html">Lists</a>
+            <a href="members.html">Members</a>
+            <a href="reviews.html">Reviews</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="search-submit">🔍 Search</button>
+            </div>
+
+            <button class="login-btn" onclick="window.location.href='login.html'" style="display:none;" id="loginBtn">
+                Log in
+            </button>
+
+            <button class="signup-btn" onclick="window.location.href='signup.html'" style="display:none;" id="signupBtn">
+                Sign up
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         SEARCH RESULTS
+    ========================== -->
+
+    <section class="section search-results-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">SEARCH RESULTS</p>
+
+                <h2>Results for <span id="searchQuery"></span></h2>
+
+            </div>
+
+        </div>
+
+        <div class="films-grid" id="searchResults">
+            <!-- Search results will be populated here -->
+        </div>
+
+    </section>
+
+    <!-- =========================
+         MOVIE MODAL
+    ========================== -->
+
+    <div id="movieModal" class="movie-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeMovieModal()">&times;</span>
+            <!-- Modal content populated by JavaScript -->
+        </div>
+    </div>
+
+    <script src="css/script.js"></script>
+
+</body>
+
+</html>
